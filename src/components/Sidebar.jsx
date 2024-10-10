@@ -50,7 +50,7 @@ const Sidebar = ({ toggleSidebar }) => {
           </li>
           <li className="text-white flex items-center text-lg gap-2 p-2">
             <FaTv />
-            <Link to="/tv-show">TV Shows</Link>
+            <Link to="/tvshow">TV Shows</Link>
           </li>
           <li className="text-white flex items-center text-lg gap-2 p-2">
             <SiMyanimelist />

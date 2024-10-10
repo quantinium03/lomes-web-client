@@ -12,17 +12,17 @@ const Layout = () => {
         setIsSidebarOpen(prev => !prev);
     }
 
-    const handleClickOutside = (e) => {
-        if (isSidebarOpen &&
-            sidebarRef.current &&
-            !sidebarRef.current.contains(e.target) &&
-            toggleButtonRef.current &&
-            !toggleButtonRef.current.contains(e.target)) {
-            setIsSidebarOpen(false);
-        }
-    }
 
     useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (isSidebarOpen &&
+                sidebarRef.current &&
+                !sidebarRef.current.contains(e.target) &&
+                toggleButtonRef.current &&
+                !toggleButtonRef.current.contains(e.target)) {
+                setIsSidebarOpen(false);
+            }
+        }
         document.addEventListener('click', handleClickOutside);
         return () => {
             document.removeEventListener('click', handleClickOutside);
@@ -42,7 +42,7 @@ const Layout = () => {
             )}
             <div
                 ref={sidebarRef}
-                className={`bg-gruvbackground mb-4 p-2 h-[100vh] border-r border-2-zinc-600 fixed overflow-auto transition-transform duration-300 z-30 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+                className={`bg-gruvbackground mb-4 p-2 h-[100vh]  fixed overflow-auto transition-transform duration-300 z-30 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
                     }`}
             >
                 <Sidebar toggleSidebar={toggleSidebar} />

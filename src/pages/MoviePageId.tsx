@@ -1,14 +1,39 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { FaImdb } from "react-icons/fa6";
-import React from "react";
 
-const MoviePageId = () => {
-  const movieData = useLoaderData();
+interface MovieData {
+  id: number;
+  title: string;
+  imdbRating: string;
+  runtime: string;
+  year: string;
+  description: string;
+  director: string;
+  writer: string;
+  actor: string;
+  genre: string;
+  posterUrl: string;
+  filePath: string;
+}
+
+interface LoaderParams {
+  params: {
+    id: string;
+  };
+}
+
+const MoviePageId = (): JSX.Element => {
+  const movieData = useLoaderData() as MovieData;
   const navigate = useNavigate();
 
-  const handlePlay = () => {
-    navigate(`/movie/${movieData.id}/play`);
-  }
+  const handlePlay = (): void => {
+    const query = new URLSearchParams({
+      mediaPath: movieData.filePath,
+      userId: "1",
+    }).toString();
+
+    navigate(`/movie/${movieData.id}/play?${query}`);
+  };
 
   return (
     <>
@@ -49,19 +74,27 @@ const MoviePageId = () => {
             </div>
           </div>
           <div className="">
-            <button className="text-2xl px-2 py-1 font-bold text-white bg-[#b8bb26]" onClick={handlePlay}>PLAY</button>
+            <button
+              className="text-2xl px-2 py-1 font-bold text-white bg-[#b8bb26]"
+              onClick={handlePlay}
+            >
+              PLAY
+            </button>
           </div>
         </div>
-
         <div className="ml-24">
-          <img src={movieData.posterUrl} alt={movieData.title} className="w-[512px]" />
+          <img
+            src={movieData.posterUrl}
+            alt={movieData.title}
+            className="w-[512px]"
+          />
         </div>
       </div>
     </>
   );
 };
 
-const MovieLoader = async ({ params }) => {
+const MovieLoader = async ({ params }: LoaderParams): Promise<MovieData> => {
   const res = await fetch(`/api/movies/${params.id}`);
   const data = await res.json();
   return data.data;

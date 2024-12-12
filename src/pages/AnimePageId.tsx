@@ -1,12 +1,52 @@
-import { useLoaderData, useNavigate } from 'react-router'
+import { useLoaderData, useNavigate } from 'react-router';
 
-const AnimePageId = () => {
-  const { animeData, animeEpisodeData } = useLoaderData();
+interface AnimeData {
+  animeId: string;
+  title: string;
+  score: string;
+  year: string;
+  type: string;
+  source: string;
+  description: string;
+  studios: string;
+  genre: string;
+  status: string;
+  posterUrl: string;
+}
+
+interface AnimeEpisode {
+  animeId: string;
+  episodeId: string;
+  title: string,
+  score: string,
+  description: string,
+  posterUrl: string,
+  episodePath: string,
+}
+
+interface LoaderData {
+  animeData: AnimeData;
+  animeEpisodeData: AnimeEpisode[];
+}
+
+interface LoaderParams {
+  params: {
+    id: string;
+  };
+}
+
+const AnimePageId: React.FC = () => {
+  const { animeData, animeEpisodeData } = useLoaderData() as LoaderData;
   const navigate = useNavigate();
 
-  const handlePlay = () => {
-    navigate(`/anime/${animeData.animeId}/play`);
-  }
+  const handlePlay = (episodePath: string): void => {
+    const query = new URLSearchParams({
+      mediaPath: episodePath,
+      userId: "1",
+    }).toString();
+
+    navigate(`/movie/${animeData.animeId}/play?${query}`);
+  };
 
   return (
     <>
@@ -38,45 +78,49 @@ const AnimePageId = () => {
               <span className="text-white">{animeData.status}</span>
             </div>
           </div>
-
         </div>
-
         <div className="w-1/3 flex justify-center">
-          <img src={animeData.posterUrl} alt={animeData.title} className="w-[256px]" />
+          <img
+            src={animeData.posterUrl}
+            alt={animeData.title}
+            className="w-[256px]"
+          />
         </div>
-
       </div>
-
       <div className="mx-auto px-0 lg:px-16 lg:mx-24 items-center pt-9">
         <h2 className="text-white font-bold text-2xl">Episodes: </h2>
         <div className="flex gap-4 flex-wrap mt-2">
           {animeEpisodeData.map((media) => (
-            <button onClick={handlePlay} key={media.animeId} className="flex border-zinc-300 bg-zinc-800 border p-4 aspect-square text-white items-center rounded">
+            <button
+              onClick={() => handlePlay(media.episodePath)}
+              key={media.animeId}
+              className="flex border-zinc-300 bg-zinc-800 border p-4 aspect-square text-white items-center rounded"
+            >
               {media.episodeId}
             </button>
           ))}
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-const AnimeLoader = async ({ params }) => {
+const AnimeLoader = async ({ params }: LoaderParams): Promise<LoaderData> => {
   const [animeRes, episodeRes] = await Promise.all([
     fetch(`/api/anime/${params.id}`),
     fetch(`/api/anime/${params.id}/episodes`)
-  ])
+  ]);
 
   const animeData = await animeRes.json();
   const animeEpisodeData = await episodeRes.json();
+
   console.log(animeData.data);
-  console.log(animeEpisodeData.data)
+  console.log(animeEpisodeData.data);
 
   return {
     animeData: animeData.data,
     animeEpisodeData: animeEpisodeData.data,
-  }
+  };
 };
-
 
 export { AnimePageId as default, AnimeLoader };

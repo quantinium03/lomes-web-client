@@ -3,17 +3,18 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 
 interface TvShow {
-  tvShowId: number;
+  tvShowId: string;
   title: string;
-  posterUrl: string;
-  description: string;
-  noOfSeasons: number;
-  premiereDate: string;
-  endedData: string;
-  genre: string;
-  status: string;
   rating: string;
-  imdbId: number;
+  premieredData: string;
+  description: string;
+  director: string;
+  writer: string;
+  actor: string;
+  genre: string;
+  posterURl: string;
+  seasons?: string[];
+  noOfSeasons: string;
 }
 
 const TvShowPage: React.FC = () => {
@@ -32,7 +33,7 @@ const TvShowPage: React.FC = () => {
         {tvShow.map((media) => (
           <Link key={media.tvShowId} to={`/tvShow/${media.tvShowId}`}>
             <img
-              src={media.posterUrl}
+              src={media.posterURl}
               alt={media.title}
               className="w-full h-64 aspect-[2/3] object-cover rounded-lg shadow-lg duration-300 hover:scale-105"
             />

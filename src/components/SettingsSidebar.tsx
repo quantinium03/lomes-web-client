@@ -1,55 +1,3 @@
-/* import {
-  Bell,
-  Bug,
-  Cloud,
-  KeyRound,
-  LibraryBig,
-  MonitorSmartphone,
-  ScrollText,
-  Settings,
-  Sidebar,
-  SquareActivity,
-  User,
-} from "lucide-react";
-import { FC } from "react";
-import {
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  SidebarTrigger,
-} from "./ui/sidebar";
-
-interface Item {
-  title: string;
-  icon: FC;
-  url: string;
-} */
-
-/* const serverItems: Item[] = [
-  { title: "General", icon: Settings, url: "/setting/general" },
-  { title: "Users", icon: User, url: "/setting/user" },
-  { title: "Libraries", icon: LibraryBig, url: "/setting/library" },
-];
-
-const deviceItems: Item[] = [
-  { title: "Devices", icon: MonitorSmartphone, url: "/setting/devices" },
-  { title: "Activity", icon: SquareActivity, url: "/setting/activity" },
-];
-
-const advancedItems: Item[] = [
-  { title: "Networking", icon: Cloud, url: "/setting/networking" },
-  { title: "API Keys", icon: KeyRound, url: "/setting/api" },
-  { title: "Logs", icon: ScrollText, url: "/setting/logs" },
-  { title: "Notification", icon: Bell, url: "/setting/notification" },
-  { title: "Report", icon: Bug, url: "/setting/report" },
-]; */
-
 import { FC } from "react";
 import {
   Music,
@@ -94,7 +42,6 @@ const medias: Item[] = [
   { title: "Movies", url: "/movie", icon: Clapperboard },
   { title: "TV Shows", url: "/tvshow", icon: Tv },
   { title: "Anime", url: "/anime", icon: Shell },
-  { title: "Music", url: "/music", icon: Music },
 ];
 
 const administration: Item[] = [

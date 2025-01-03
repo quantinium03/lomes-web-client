@@ -1,5 +1,11 @@
 import { useEffect, useRef } from "react";
 import { Outlet } from "react-router";
+import { 
+  SignedIn, 
+  SignedOut, 
+  SignInButton, 
+  UserButton 
+} from "@clerk/clerk-react";
 import Navbar from "@/components/Navbar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider, useSidebar } from "@/components/ui/sidebar";
@@ -32,7 +38,6 @@ const LayoutContent = () => {
       <div className="p-2 mx-auto fixed w-screen border-b z-10 bg-[#181818]">
         <Navbar triggerRef={triggerRef} />
       </div>
-
       <div className="flex pt-16">
         {open && (
           <div
@@ -42,7 +47,6 @@ const LayoutContent = () => {
             <AppSidebar />
           </div>
         )}
-
         <div className="pt-4 px-4 w-full">
           <Outlet />
         </div>

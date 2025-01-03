@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { SidebarTrigger } from "./ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import AppSearchBar from "./AppSearchBar";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import { dark } from "@clerk/themes";
 
 interface SettingsNavbarProps {
   triggerRef?: RefObject<HTMLButtonElement>;
@@ -34,10 +36,25 @@ const SettingsNavbar: React.FC<SettingsNavbarProps> = ({ triggerRef }) => {
         <button className="text-white hover:text-gray-400">
           <Bell />
         </button>
-        <Avatar className="cursor-pointer h-8 w-8 rounded-full">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <div className="flex items-center space-x-4">
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                Sign In
+              </button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton
+              appearance={{
+                baseTheme: dark,
+                elements: {
+                  userButtonAvatarBox: "w-10 h-10",
+                }
+              }}
+            />
+          </SignedIn>
+        </div>
       </div>
     </nav >
   );

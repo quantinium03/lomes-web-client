@@ -58,11 +58,26 @@ const SidebarMenuItemLink: FC<{ item: Item }> = ({ item }) => (
         href={item.url}
         className="flex items-center gap-3 text-white"
         onClick={(e) => {
-          e.preventDefault();
           if (item.title === "Sync") {
-            axios.post("/api/database/refresh/tv").catch((err) => console.log("couldn't refresh the tv data", err.message))
-            axios.post("/api/database/refresh/movie").catch((err) => console.log("couldn't refresh movie database", err.message))
-            axios.post("/api/database/refresh/anime").catch((err) => console.log("couldn't refresh the anime database", err.message))
+            e.preventDefault(); // Prevent only for Sync
+            axios.post("/api/database/refresh/tv").catch((err) =>
+              console.log("Couldn't refresh the TV data", err.message)
+            );
+            axios.post("/api/database/refresh/movie").catch((err) =>
+              console.log("Couldn't refresh movie database", err.message)
+            );
+            axios.post("/api/database/refresh/anime").catch((err) =>
+              console.log("Couldn't refresh the anime database", err.message)
+            );
+          } else {
+            return;
+          }
+        }}
+        onClickCapture={() => {
+          if (item.title === "Sync") {
+            if (item.url) {
+              window.location.href = item.url;
+            }
           }
         }}
       >
@@ -133,3 +148,4 @@ export function AppSidebar() {
     </div>
   );
 }
+

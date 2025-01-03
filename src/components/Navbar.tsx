@@ -2,8 +2,9 @@ import { FiSettings } from "react-icons/fi";
 import { SidebarTrigger } from "./ui/sidebar.tsx";
 import AppSearchBar from "./AppSearchBar.tsx";
 import { useNavigate } from "react-router";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import { dark } from "@clerk/themes";
 
 const Navbar = ({ triggerRef }: { triggerRef: React.Ref<HTMLButtonElement> }) => {
   const navigate = useNavigate();
@@ -25,10 +26,25 @@ const Navbar = ({ triggerRef }: { triggerRef: React.Ref<HTMLButtonElement> }) =>
           className="text-zinc-300 cursor-pointer"
           onClick={() => navigate("/setting")}
         />
-        <Avatar className="cursor-pointer">
-          <AvatarImage src="https://github.com/shadcn.png" alt="User Avatar" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <div className="flex items-center space-x-4">
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                Sign In
+              </button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton
+              appearance={{
+                baseTheme: dark,
+                elements: {
+                  userButtonAvatarBox: "w-10 h-10",
+                }
+              }}
+            />
+          </SignedIn>
+        </div>
       </div>
     </div>
   );
